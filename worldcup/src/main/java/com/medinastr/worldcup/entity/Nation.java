@@ -14,6 +14,9 @@ public class Nation {
     @Column(name="nation_name")
     private String nationName;
 
+    @Column(name="wins")
+    private int wins;
+
     @Column(name="goals")
     private int goals;
 
@@ -22,8 +25,9 @@ public class Nation {
 
     public Nation() {}
 
-    public Nation(String nationName, int goals, int goalsConceded) {
+    public Nation(String nationName, int wins, int goals, int goalsConceded) {
         this.nationName = nationName;
+        this.wins = wins;
         this.goals = goals;
         this.goalsConceded = goalsConceded;
     }
@@ -42,6 +46,14 @@ public class Nation {
 
     public void setNationName(String nationName) {
         this.nationName = nationName;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 
     public int getGoals() {
@@ -65,6 +77,7 @@ public class Nation {
         return "Nation{" +
                 "id=" + id +
                 ", nationName='" + nationName + '\'' +
+                ", wins=" + wins +
                 ", goals=" + goals +
                 ", goalsConceded=" + goalsConceded +
                 '}';
