@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")  // liberar todas as entradas que vierem da máquina
 @RequestMapping("/nations")
 public class NationRestController {
 
@@ -25,6 +26,11 @@ public class NationRestController {
 
     @PostMapping
     public Nation addNation(@RequestBody Nation nation) {
+        return nationRepository.save(nation);
+    }
+
+    @PutMapping
+    public Nation updateNation(@RequestBody Nation nation) {
         return nationRepository.save(nation);
     }
 }

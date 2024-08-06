@@ -2,7 +2,7 @@ const formulario = document.querySelector("#nationForm");
 const nationInputs = document.querySelectorAll(".nation");
 
 function record(nationData) {
-    fetch("http://localhost:8080/record", {
+    fetch("http://localhost:8080/nations", {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
