@@ -1,5 +1,6 @@
 package com.medinastr.worldcup.entity;
 
+import com.medinastr.worldcup.dto.NationDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -81,6 +82,15 @@ public class Nation {
 
     public void setInstitution(Institution institution) {
         this.institution = institution;
+    }
+
+    public NationDTO toDTO() {
+        NationDTO nationDTO = new NationDTO();
+        nationDTO.setName(this.getName());
+        nationDTO.setWins(this.getWins());
+        nationDTO.setGoals(this.getGoals());
+        nationDTO.setGoalsConceded(this.getGoalsConceded());
+        return nationDTO;
     }
 
     @Override

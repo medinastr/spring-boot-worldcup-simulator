@@ -1,6 +1,7 @@
 package com.medinastr.worldcup.service;
 
 import com.medinastr.worldcup.dao.NationRepository;
+import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NationService {
@@ -21,12 +23,16 @@ public class NationService {
         this.nationRepository = nationRepository;
     }
 
-    public List<Nation> findAll() {
-        return (List<Nation>) nationRepository.findAll();
+    public List<NationDTO> getNations() {
+        List<Nation> nations = nationRepository.findAll();
+        return nations.stream()
+                .map(nation -> nation.toDTO())
+                .collect(Collectors.toList());
     }
 
-    public Nation save(Nation nation) {
-        return nationRepository.save(nation);
+    public Nation save(NationDTO nationDTO) {
+        Nation dbNation = nationDTO.toNation();
+        return nationRepository.save(dbNation);
     }
 
     public Optional<Nation> delete(int id) {

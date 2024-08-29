@@ -17,7 +17,7 @@ public class Institution {
     @Column(name="password")
     private String password;
 
-    @Column(name="money")
+    @Column(name="money_estimated")
     private int money;
 
     @Column(name="payment_user")
