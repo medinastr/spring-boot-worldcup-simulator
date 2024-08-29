@@ -3,6 +3,8 @@ package com.medinastr.worldcup.entity;
 import com.medinastr.worldcup.dto.NationDTO;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="nation")
 public class Nation {
@@ -26,6 +28,11 @@ public class Nation {
 
     @OneToOne(mappedBy = "nation")
     private Institution institution;
+
+    @OneToMany(mappedBy = "nation",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Player> players;
 
     public Nation() {}
 
