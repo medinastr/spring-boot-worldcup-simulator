@@ -27,7 +27,7 @@ public class NationRestController {
         return ResponseEntity.status(200).body(nations);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<Nation> addNation(@RequestBody Nation nation) {
         Nation dbNation = nationService.save(nation);
         return ResponseEntity.status(201).body(dbNation);

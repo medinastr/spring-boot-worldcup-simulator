@@ -11,8 +11,8 @@ public class Nation {
     @Column(name="id")
     private int id;
 
-    @Column(name="nation_name")
-    private String nationName;
+    @Column(name="name")
+    private String name;
 
     @Column(name="wins")
     private int wins;
@@ -23,10 +23,13 @@ public class Nation {
     @Column(name="goals_conceded")
     private int goalsConceded;
 
+    @OneToOne(mappedBy = "nation")
+    private Institution institution;
+
     public Nation() {}
 
-    public Nation(String nationName, int wins, int goals, int goalsConceded) {
-        this.nationName = nationName;
+    public Nation(String name, int wins, int goals, int goalsConceded) {
+        this.name = name;
         this.wins = wins;
         this.goals = goals;
         this.goalsConceded = goalsConceded;
@@ -40,12 +43,12 @@ public class Nation {
         this.id = id;
     }
 
-    public String getNationName() {
-        return nationName;
+    public String getName() {
+        return name;
     }
 
-    public void setNationName(String nationName) {
-        this.nationName = nationName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getWins() {
@@ -72,11 +75,19 @@ public class Nation {
         this.goalsConceded = goalsConceded;
     }
 
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
     @Override
     public String toString() {
         return "Nation{" +
                 "id=" + id +
-                ", nationName='" + nationName + '\'' +
+                ", nationName='" + name + '\'' +
                 ", wins=" + wins +
                 ", goals=" + goals +
                 ", goalsConceded=" + goalsConceded +
