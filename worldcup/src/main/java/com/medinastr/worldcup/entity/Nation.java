@@ -17,15 +17,6 @@ public class Nation {
     @Column(name="name")
     private String name;
 
-    @Column(name="wins")
-    private int wins;
-
-    @Column(name="goals")
-    private int goals;
-
-    @Column(name="goals_conceded")
-    private int goalsConceded;
-
     @OneToOne(mappedBy = "nation")
     private Institution institution;
 
@@ -36,11 +27,8 @@ public class Nation {
 
     public Nation() {}
 
-    public Nation(String name, int wins, int goals, int goalsConceded) {
+    public Nation(String name) {
         this.name = name;
-        this.wins = wins;
-        this.goals = goals;
-        this.goalsConceded = goalsConceded;
     }
 
     public int getId() {
@@ -59,30 +47,6 @@ public class Nation {
         this.name = name;
     }
 
-    public int getWins() {
-        return wins;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
-    public int getGoals() {
-        return goals;
-    }
-
-    public void setGoals(int goals) {
-        this.goals = goals;
-    }
-
-    public int getGoalsConceded() {
-        return goalsConceded;
-    }
-
-    public void setGoalsConceded(int goalsConceded) {
-        this.goalsConceded = goalsConceded;
-    }
-
     public Institution getInstitution() {
         return institution;
     }
@@ -94,9 +58,6 @@ public class Nation {
     public NationDTO toDTO() {
         NationDTO nationDTO = new NationDTO();
         nationDTO.setName(this.getName());
-        nationDTO.setWins(this.getWins());
-        nationDTO.setGoals(this.getGoals());
-        nationDTO.setGoalsConceded(this.getGoalsConceded());
         return nationDTO;
     }
 
@@ -104,10 +65,9 @@ public class Nation {
     public String toString() {
         return "Nation{" +
                 "id=" + id +
-                ", nationName='" + name + '\'' +
-                ", wins=" + wins +
-                ", goals=" + goals +
-                ", goalsConceded=" + goalsConceded +
+                ", name='" + name + '\'' +
+                ", institution=" + institution +
+                ", players=" + players +
                 '}';
     }
 }

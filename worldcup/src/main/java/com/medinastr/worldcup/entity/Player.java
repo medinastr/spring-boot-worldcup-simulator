@@ -21,15 +21,6 @@ public class Player {
     @Column(name = "shirt_number")
     private int shirtNumber;
 
-    @Column(name = "goals")
-    private int goals;
-
-    @Column(name = "yellow_cards")
-    private int yellowCards;
-
-    @Column(name = "red_cards")
-    private int redCards;
-
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "nation_id")
@@ -37,21 +28,11 @@ public class Player {
 
     public Player() {}
 
-    public Player(String firstName, String lastName, int shirtNumber, int goals, int yellowCards, int redCards) {
+    public Player(String firstName, String lastName, int shirtNumber, Nation nation) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.shirtNumber = shirtNumber;
-        this.goals = goals;
-        this.yellowCards = yellowCards;
-        this.redCards = redCards;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.nation = nation;
     }
 
     public String getFirstName() {
@@ -78,30 +59,6 @@ public class Player {
         this.shirtNumber = shirtNumber;
     }
 
-    public int getGoals() {
-        return goals;
-    }
-
-    public void setGoals(int goals) {
-        this.goals = goals;
-    }
-
-    public int getYellowCards() {
-        return yellowCards;
-    }
-
-    public void setYellowCards(int yellowCards) {
-        this.yellowCards = yellowCards;
-    }
-
-    public int getRedCards() {
-        return redCards;
-    }
-
-    public void setRedCards(int redCards) {
-        this.redCards = redCards;
-    }
-
     public Nation getNation() {
         return nation;
     }
@@ -115,9 +72,6 @@ public class Player {
         playerDTO.setFirstName(this.getFirstName());
         playerDTO.setLastName(this.getLastName());
         playerDTO.setShirtNumber(this.getShirtNumber());
-        playerDTO.setGoals(this.getGoals());
-        playerDTO.setYellowCards(this.getYellowCards());
-        playerDTO.setRedCards(this.getRedCards());
         return playerDTO;
     }
 }

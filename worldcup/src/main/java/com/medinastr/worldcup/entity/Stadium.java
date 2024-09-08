@@ -20,19 +20,15 @@ public class Stadium {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "address")
-    private String address;
-
     @Column(name = "game_rental")
-    private int gameRental;
+    private double gameRental;
 
     public Stadium() {}
 
-    public Stadium(String name, int capacity, String city, String address, int gameRental) {
+    public Stadium(String name, int capacity, String city, double gameRental) {
         this.name = name;
         this.capacity = capacity;
         this.city = city;
-        this.address = address;
         this.gameRental = gameRental;
     }
 
@@ -68,15 +64,7 @@ public class Stadium {
         this.city = city;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getGameRental() {
+    public double getGameRental() {
         return gameRental;
     }
 
@@ -91,7 +79,6 @@ public class Stadium {
                 ", name='" + name + '\'' +
                 ", capacity=" + capacity +
                 ", city='" + city + '\'' +
-                ", address='" + address + '\'' +
                 ", gameRental=" + gameRental +
                 '}';
     }

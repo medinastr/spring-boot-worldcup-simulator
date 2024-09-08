@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerService {
 
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository) {
@@ -22,7 +22,7 @@ public class PlayerService {
     public List<PlayerDTO> getPlayers() {
         List<Player> dbPlayers = playerRepository.findAll();
         List<PlayerDTO> players = dbPlayers.stream()
-                .map(player -> player.toDTO())
+                .map(Player::toDTO)
                 .collect(Collectors.toList());
         return players;
     }

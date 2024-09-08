@@ -8,19 +8,13 @@ public class PlayerDTO {
     private String firstName;
     private String lastName;
     private int shirtNumber;
-    private int goals;
-    private int yellowCards;
-    private int redCards;
 
     public PlayerDTO() {}
 
-    public PlayerDTO(String firstName, String lastName, int shirtNumber, int goals, int yellowCards, int redCards) {
+    public PlayerDTO(String firstName, String lastName, int shirtNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.shirtNumber = shirtNumber;
-        this.goals = goals;
-        this.yellowCards = yellowCards;
-        this.redCards = redCards;
     }
 
     public String getFirstName() {
@@ -47,38 +41,11 @@ public class PlayerDTO {
         this.shirtNumber = shirtNumber;
     }
 
-    public int getGoals() {
-        return goals;
-    }
-
-    public void setGoals(int goals) {
-        this.goals = goals;
-    }
-
-    public int getYellowCards() {
-        return yellowCards;
-    }
-
-    public void setYellowCards(int yellowCards) {
-        this.yellowCards = yellowCards;
-    }
-
-    public int getRedCards() {
-        return redCards;
-    }
-
-    public void setRedCards(int redCards) {
-        this.redCards = redCards;
-    }
-
     public Player toPlayer() {
         Player player = new Player();
         player.setFirstName(this.getFirstName());
         player.setLastName(this.getLastName());
         player.setShirtNumber(this.getShirtNumber());
-        player.setGoals(this.getGoals());
-        player.setYellowCards(this.getYellowCards());
-        player.setRedCards(this.getRedCards());
         return player;
     }
 }

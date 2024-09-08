@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/nations")
 public class NationRestController {
 
-    NationService nationService;
+    private final NationService nationService;
 
     @Autowired
     public NationRestController(NationService nationService) {
@@ -29,10 +29,16 @@ public class NationRestController {
         return ResponseEntity.status(200).body(nations);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/saveNation")
     public ResponseEntity<Nation> addNation(@RequestBody NationDTO nationDTO) {
         Nation dbNation = nationService.save(nationDTO);
         return ResponseEntity.status(201).body(dbNation);
+    }
+
+    @PostMapping("/saveNations")
+    public ResponseEntity<List<Nation>> saveNationsList(@RequestBody List<NationDTO> nationsDTO) {
+        List<Nation> dbNations = nationService.saveNationsList(nationsDTO);
+        return ResponseEntity.status(201).body(dbNations);
     }
 
     @DeleteMapping("/{id}")

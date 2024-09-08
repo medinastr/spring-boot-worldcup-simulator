@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/players")
 public class PlayerRestController {
 
-    private PlayerService playerService;
+    private final PlayerService playerService;
 
     @Autowired
     public PlayerRestController(PlayerService playerService) {
