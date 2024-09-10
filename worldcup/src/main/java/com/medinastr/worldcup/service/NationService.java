@@ -45,10 +45,11 @@ public class NationService {
 
     public void validateNationName(String name) {
         if (name == null || name.length() < 3 || !name.matches("[a-zA-Z\\s]+")) {
-            throw new IllegalArgumentException("Nation name invalid.");
+            throw new RuntimeException("Nation name invalid.");
+        } else if (nationRepository.findByName(name).isPresent()) {
+            throw new RuntimeException("Nation already exists.");
         }
     }
-
 
     public Optional<Nation> delete(int id) {
         Optional<Nation> findNation = nationRepository.findById(id);

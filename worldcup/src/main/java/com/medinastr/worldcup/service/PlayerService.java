@@ -58,13 +58,16 @@ public class PlayerService {
 
     public void validatePlayer(String firstName, String lastName, Integer shirtNumber, Optional<Nation> nation) {
         if (firstName == null || firstName.length() < 2) {
-            throw new IllegalArgumentException("First name invalid.");
+            throw new RuntimeException("First name invalid.");
         } else if (lastName == null || lastName.length() < 2) {
-            throw new IllegalArgumentException("Last name invalid.");
+            throw new RuntimeException("Last name invalid.");
         } else if (shirtNumber == null || shirtNumber < 1 || shirtNumber > 26) {
-            throw new IllegalArgumentException("Shirt number must be between 1 and 26.");
-        } else if (!nation.isPresent()) {
-            throw new IllegalArgumentException("Invalid nation name.");
+            throw new RuntimeException("Shirt number must be between 1 and 26.");
+        } else if (nation.isEmpty()) {
+            throw new RuntimeException("Invalid nation name.");
+        } else if (nationRepository.findByName(nation.get().getName())
+                .get().getPlayers().size() >= 26) {
+            throw new RuntimeException("There are already 26 players in the nation.");
         }
     }
 

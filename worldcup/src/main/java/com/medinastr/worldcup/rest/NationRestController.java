@@ -1,6 +1,5 @@
 package com.medinastr.worldcup.rest;
 
-import com.medinastr.worldcup.dao.NationRepository;
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
 import com.medinastr.worldcup.service.NationService;
@@ -44,5 +43,10 @@ public class NationRestController {
     public ResponseEntity<Optional<Nation>> deleteNation(@PathVariable int id) {
         Optional<Nation> nationToDelete = nationService.delete(id);
         return ResponseEntity.status(204).body(nationToDelete);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleException(RuntimeException exc) {
+        return ResponseEntity.status(400).body(exc.getMessage());
     }
 }

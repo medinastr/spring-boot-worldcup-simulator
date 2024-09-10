@@ -37,4 +37,9 @@ public class PlayerRestController {
         List<Player> dbPlayers = playerService.savePlayersList(playersDTO);
         return ResponseEntity.status(201).body(dbPlayers);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleException(RuntimeException exc) {
+        return ResponseEntity.status(400).body(exc.getMessage());
+    }
 }
