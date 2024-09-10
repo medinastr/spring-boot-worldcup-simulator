@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@CrossOrigin("*")  // liberar todas as entradas que vierem da máquina
 @RequestMapping("/nations")
 public class NationRestController {
 
@@ -30,8 +29,8 @@ public class NationRestController {
     }
 
     @PostMapping("/saveNation")
-    public ResponseEntity<Nation> addNation(@RequestBody NationDTO nationDTO) {
-        Nation dbNation = nationService.save(nationDTO);
+    public ResponseEntity<Nation> saveNation(@RequestBody NationDTO nationDTO) {
+        Nation dbNation = nationService.saveNation(nationDTO);
         return ResponseEntity.status(201).body(dbNation);
     }
 

@@ -8,13 +8,15 @@ public class PlayerDTO {
     private String firstName;
     private String lastName;
     private int shirtNumber;
+    private String nationName;
 
     public PlayerDTO() {}
 
-    public PlayerDTO(String firstName, String lastName, int shirtNumber) {
+    public PlayerDTO(String firstName, String lastName, int shirtNumber, String nationName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.shirtNumber = shirtNumber;
+        this.nationName = nationName;
     }
 
     public String getFirstName() {
@@ -39,6 +41,14 @@ public class PlayerDTO {
 
     public void setShirtNumber(int shirtNumber) {
         this.shirtNumber = shirtNumber;
+    }
+
+    public String getNationName() {
+        return nationName;
+    }
+
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
     }
 
     public Player toPlayer() {

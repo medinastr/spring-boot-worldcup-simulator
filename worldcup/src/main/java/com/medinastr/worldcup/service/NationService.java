@@ -27,7 +27,7 @@ public class NationService {
                 .collect(Collectors.toList());
     }
 
-    public Nation save(NationDTO nationDTO) {
+    public Nation saveNation(NationDTO nationDTO) {
         validateNationName(nationDTO.getName());
         Nation dbNation = nationDTO.toNation();
         return nationRepository.save(dbNation);

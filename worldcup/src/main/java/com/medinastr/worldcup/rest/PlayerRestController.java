@@ -26,9 +26,15 @@ public class PlayerRestController {
         return ResponseEntity.status(200).body(players);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Player> addPlayer(@RequestBody PlayerDTO playerDTO) {
-        Player dbPlayer = playerService.addPlayer(playerDTO);
+    @PostMapping("/savePlayer")
+    public ResponseEntity<Player> savePlayer(@RequestBody PlayerDTO playerDTO) {
+        Player dbPlayer = playerService.savePlayer(playerDTO);
         return ResponseEntity.status(201).body(dbPlayer);
+    }
+
+    @PostMapping("/savePlayers")
+    public ResponseEntity<List<Player>> savePlayersList(@RequestBody List<PlayerDTO> playersDTO) {
+        List<Player> dbPlayers = playerService.savePlayersList(playersDTO);
+        return ResponseEntity.status(201).body(dbPlayers);
     }
 }
