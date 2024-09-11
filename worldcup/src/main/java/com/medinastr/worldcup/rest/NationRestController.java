@@ -27,13 +27,13 @@ public class NationRestController {
         return ResponseEntity.status(200).body(nations);
     }
 
-    @PostMapping("/saveNation")
+    @PostMapping("/save")
     public ResponseEntity<Nation> saveNation(@RequestBody NationDTO nationDTO) {
         Nation dbNation = nationService.saveNation(nationDTO);
         return ResponseEntity.status(201).body(dbNation);
     }
 
-    @PostMapping("/saveNations")
+    @PostMapping("/saveAll")
     public ResponseEntity<List<Nation>> saveNationsList(@RequestBody List<NationDTO> nationsDTO) {
         List<Nation> dbNations = nationService.saveNationsList(nationsDTO);
         return ResponseEntity.status(201).body(dbNations);

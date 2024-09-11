@@ -26,13 +26,13 @@ public class PlayerRestController {
         return ResponseEntity.status(200).body(players);
     }
 
-    @PostMapping("/savePlayer")
+    @PostMapping("/save")
     public ResponseEntity<Player> savePlayer(@RequestBody PlayerDTO playerDTO) {
         Player dbPlayer = playerService.savePlayer(playerDTO);
         return ResponseEntity.status(201).body(dbPlayer);
     }
 
-    @PostMapping("/savePlayers")
+    @PostMapping("/saveAll")
     public ResponseEntity<List<Player>> savePlayersList(@RequestBody List<PlayerDTO> playersDTO) {
         List<Player> dbPlayers = playerService.savePlayersList(playersDTO);
         return ResponseEntity.status(201).body(dbPlayers);
