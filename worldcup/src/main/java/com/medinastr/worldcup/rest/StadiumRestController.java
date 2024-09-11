@@ -19,6 +19,18 @@ public class StadiumRestController {
         this.stadiumService = stadiumService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<Stadium>> getStadiumsList() {
+        List<Stadium> stadiums = stadiumService.getStadiumsList();
+        return ResponseEntity.status(200).body(stadiums);
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<Stadium> getStadium(@RequestParam String name) {
+        Stadium stadium = stadiumService.getStadium(name);
+        return ResponseEntity.status(200).body(stadium);
+    }
+
     @PostMapping("/saveAll")
     ResponseEntity<List<Stadium>> saveStadiumsList(@RequestBody List<Stadium> stadiums) {
         List<Stadium> dbStadiums = stadiumService.saveStadiumsList(stadiums);

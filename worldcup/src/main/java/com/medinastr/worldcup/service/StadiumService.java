@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +17,23 @@ public class StadiumService {
     @Autowired
     public StadiumService(StadiumRepository stadiumRepository) {
         this.stadiumRepository = stadiumRepository;
+    }
+
+    // for GET -> /stadiums
+    public List<Stadium> getStadiumsList() {
+        return stadiumRepository.findAll();
+    }
+
+    // for GET -> /stadium?name="****"
+    public Stadium getStadium(String name) {
+        String dbName = name.replace("+", " ");
+        Optional<Stadium> stadium = stadiumRepository.findByName(dbName);
+        if(!name.matches("[a-zA-Z\\s]+")) {
+            throw new RuntimeException("Stadium name invalid.");
+        } else if (stadium.isEmpty()) {
+            throw new RuntimeException("Stadium not found.");
+        }
+        return stadium.get();
     }
 
     // for POST -> /stadiums/save
