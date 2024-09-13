@@ -5,10 +5,11 @@ import com.medinastr.worldcup.dao.PlayerRepository;
 import com.medinastr.worldcup.dto.PlayerDTO;
 import com.medinastr.worldcup.entity.Nation;
 import com.medinastr.worldcup.entity.Player;
+import com.medinastr.worldcup.exception.WorldcupConflictException;
+import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.NameNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,16 +59,16 @@ public class PlayerService {
 
     public void validatePlayer(String firstName, String lastName, Integer shirtNumber, Optional<Nation> nation) {
         if (firstName == null || firstName.length() < 2) {
-            throw new RuntimeException("First name invalid.");
+            throw new WorldcupInvalidAttributeException("First name invalid.");
         } else if (lastName == null || lastName.length() < 2) {
-            throw new RuntimeException("Last name invalid.");
+            throw new WorldcupInvalidAttributeException("Last name invalid.");
         } else if (shirtNumber == null || shirtNumber < 1 || shirtNumber > 26) {
-            throw new RuntimeException("Shirt number must be between 1 and 26.");
+            throw new WorldcupInvalidAttributeException("Shirt number must be between 1 and 26.");
         } else if (nation.isEmpty()) {
-            throw new RuntimeException("Invalid nation name.");
+            throw new WorldcupInvalidAttributeException("Invalid nation name.");
         } else if (nationRepository.findByName(nation.get().getName())
                 .get().getPlayers().size() >= 26) {
-            throw new RuntimeException("There are already 26 players in the nation.");
+            throw new WorldcupConflictException("There are already 26 players in the nation.");
         }
     }
 

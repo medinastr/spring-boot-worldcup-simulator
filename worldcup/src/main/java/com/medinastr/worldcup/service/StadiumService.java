@@ -2,6 +2,8 @@ package com.medinastr.worldcup.service;
 
 import com.medinastr.worldcup.dao.StadiumRepository;
 import com.medinastr.worldcup.entity.Stadium;
+import com.medinastr.worldcup.exception.WorldcupConflictException;
+import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,16 +56,16 @@ public class StadiumService {
 
     public void validateStadium(Stadium stadium) {
         if (stadiumRepository.findByName(stadium.getName()).isPresent()) {
-            throw new RuntimeException("Stadium already exists: " + stadium.getName());
+            throw new WorldcupConflictException("Stadium already exists: " + stadium.getName());
         } else if(stadium.getCapacity() < 30000) {
-            throw new RuntimeException("Capacity must be more than 30000.");
+            throw new WorldcupInvalidAttributeException("Capacity must be more than 30000.");
         } else if(stadium.getName() == null || stadium.getName().length() < 2) {
-            throw new RuntimeException("Stadium name invalid: " + stadium.getName());
+            throw new WorldcupInvalidAttributeException("Stadium name invalid: " + stadium.getName());
         } else if(stadium.getCity() == null || stadium.getCity().length() < 2
                 || !stadium.getCity().matches("[a-zA-Z\\s]+")) {
-            throw new RuntimeException("Stadium city invalid: " + stadium.getCity());
+            throw new WorldcupInvalidAttributeException("Stadium city invalid: " + stadium.getCity());
         } else if(stadium.getGameRental() < 0) {
-            throw new RuntimeException("Game rental must be more that 0.");
+            throw new WorldcupInvalidAttributeException("Game rental must be more that 0.");
         }
     }
 }

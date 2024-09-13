@@ -3,6 +3,8 @@ package com.medinastr.worldcup.service;
 import com.medinastr.worldcup.dao.NationRepository;
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
+import com.medinastr.worldcup.exception.WorldcupConflictException;
+import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +47,9 @@ public class NationService {
 
     public void validateNationName(String name) {
         if (name == null || name.length() < 3 || !name.matches("[a-zA-Z\\s]+")) {
-            throw new RuntimeException("Nation name invalid.");
+            throw new WorldcupInvalidAttributeException("Nation name invalid.");
         } else if (nationRepository.findByName(name).isPresent()) {
-            throw new RuntimeException("Nation already exists.");
+            throw new WorldcupConflictException("Nation already exists.");
         }
     }
 

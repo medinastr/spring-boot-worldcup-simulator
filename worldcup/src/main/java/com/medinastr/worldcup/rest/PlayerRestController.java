@@ -2,6 +2,8 @@ package com.medinastr.worldcup.rest;
 
 import com.medinastr.worldcup.dto.PlayerDTO;
 import com.medinastr.worldcup.entity.Player;
+import com.medinastr.worldcup.exception.WorldcupConflictException;
+import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import com.medinastr.worldcup.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,12 @@ public class PlayerRestController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleException(RuntimeException exc) {
-        return ResponseEntity.status(400).body(exc.getMessage());
+    public ResponseEntity<String> invalidAttribute(WorldcupInvalidAttributeException exc) {
+        return ResponseEntity.status(exc.getStatus()).body(exc.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> conflict(WorldcupConflictException exc) {
+        return ResponseEntity.status(exc.getStatus()).body(exc.getMessage());
     }
 }
