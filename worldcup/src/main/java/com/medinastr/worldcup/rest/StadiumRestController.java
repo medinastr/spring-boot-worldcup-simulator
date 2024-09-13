@@ -44,14 +44,4 @@ public class StadiumRestController {
         Stadium dbStadium = stadiumService.saveStadium(stadium);
         return ResponseEntity.status(201).body(stadium);
     }
-
-    @ExceptionHandler
-    public ResponseEntity<String> invalidAttribute(WorldcupInvalidAttributeException exc) {
-        return ResponseEntity.status(exc.getStatus()).body(exc.getMessage());
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> conflict(WorldcupConflictException exc) {
-        return ResponseEntity.status(exc.getStatus()).body(exc.getMessage());
-    }
 }

@@ -1,17 +1,15 @@
 package com.medinastr.worldcup.exception;
 
-public class WorldcupConflictException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public final int status = 409;
+@ResponseStatus(HttpStatus.CONFLICT)
+public class WorldcupConflictException extends RuntimeException {
 
     public WorldcupConflictException() {
     }
 
     public WorldcupConflictException(String message) {
         super(message);
-    }
-
-    public int getStatus() {
-        return status;
     }
 }

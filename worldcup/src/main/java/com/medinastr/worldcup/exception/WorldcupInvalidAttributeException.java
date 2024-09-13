@@ -1,17 +1,15 @@
 package com.medinastr.worldcup.exception;
 
-public class WorldcupInvalidAttributeException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public final int status = 400;
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class WorldcupInvalidAttributeException extends RuntimeException {
 
     public WorldcupInvalidAttributeException() {
     }
 
     public WorldcupInvalidAttributeException(String message) {
         super(message);
-    }
-
-    public int getStatus() {
-        return status;
     }
 }

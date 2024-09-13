@@ -46,14 +46,4 @@ public class NationRestController {
         Optional<Nation> nationToDelete = nationService.delete(id);
         return ResponseEntity.status(204).body(nationToDelete);
     }
-
-    @ExceptionHandler
-    public ResponseEntity<String> invalidAttribute(WorldcupInvalidAttributeException exc) {
-        return ResponseEntity.status(exc.getStatus()).body(exc.getMessage());
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> conflict(WorldcupConflictException exc) {
-        return ResponseEntity.status(exc.getStatus()).body(exc.getMessage());
-    }
 }
