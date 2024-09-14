@@ -4,6 +4,7 @@ import com.medinastr.worldcup.dao.StadiumRepository;
 import com.medinastr.worldcup.entity.Stadium;
 import com.medinastr.worldcup.exception.WorldcupConflictException;
 import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
+import com.medinastr.worldcup.exception.WorldcupNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,9 @@ public class StadiumService {
         String dbName = name.replace("+", " ");
         Optional<Stadium> stadium = stadiumRepository.findByName(dbName);
         if(!name.matches("[a-zA-Z\\s]+")) {
-            throw new RuntimeException("Stadium name invalid.");
+            throw new WorldcupInvalidAttributeException("Stadium name invalid.");
         } else if (stadium.isEmpty()) {
-            throw new RuntimeException("Stadium not found.");
+            throw new WorldcupNotFoundException("Stadium not found.");
         }
         return stadium.get();
     }

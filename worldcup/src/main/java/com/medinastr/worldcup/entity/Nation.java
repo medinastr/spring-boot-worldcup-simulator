@@ -3,11 +3,16 @@ package com.medinastr.worldcup.entity;
 import com.medinastr.worldcup.dto.NationDTO;
 import jakarta.persistence.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name="nation")
-public class Nation {
+public class Nation implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
