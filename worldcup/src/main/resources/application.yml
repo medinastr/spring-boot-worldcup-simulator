@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: worldcup
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/worldcup_db
+    username: springstudent
+    password: Springstudent3692@#
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      show-sql: false

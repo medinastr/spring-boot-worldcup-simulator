@@ -22,8 +22,8 @@ public class Nation implements Serializable {
     @Column(name="name")
     private String name;
 
-    @OneToOne(mappedBy = "nation")
-    private Institution institution;
+    @Column(name="institution")
+    private String institution;
 
     @OneToMany(mappedBy = "nation",
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
@@ -52,11 +52,11 @@ public class Nation implements Serializable {
         this.name = name;
     }
 
-    public Institution getInstitution() {
+    public String getInstitution() {
         return institution;
     }
 
-    public void setInstitution(Institution institution) {
+    public void setInstitution(String institution) {
         this.institution = institution;
     }
 
@@ -71,6 +71,7 @@ public class Nation implements Serializable {
     public NationDTO toDTO() {
         NationDTO nationDTO = new NationDTO();
         nationDTO.setName(this.getName());
+        nationDTO.setInstitution((this.getInstitution()));
         return nationDTO;
     }
 

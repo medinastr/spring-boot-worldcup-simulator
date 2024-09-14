@@ -1,16 +1,19 @@
 package com.medinastr.worldcup.dto;
 
 import com.medinastr.worldcup.entity.Nation;
-import jakarta.persistence.Column;
 
 public class NationDTO {
 
     private String name;
+    private String institution;
+    private String email;
 
     public NationDTO() {}
 
-    public NationDTO(String name) {
+    public NationDTO(String name, String institution, String email) {
         this.name = name;
+        this.institution = institution;
+        this.email = email;
     }
 
     public String getName() {
@@ -21,9 +24,26 @@ public class NationDTO {
         this.name = name;
     }
 
+    public String getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(String institution) {
+        this.institution = institution;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Nation toNation() {
         Nation nation = new Nation();
         nation.setName(this.getName());
+        nation.setInstitution(this.getInstitution());
         return nation;
     }
 }
