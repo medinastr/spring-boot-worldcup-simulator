@@ -12,3 +12,7 @@ spring:
       ddl-auto: update
     properties:
       show-sql: false
+
+spring-doc:
+  swagger-ui:
+    enabled: true
