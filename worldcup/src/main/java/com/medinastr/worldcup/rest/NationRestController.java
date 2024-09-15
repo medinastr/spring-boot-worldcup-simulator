@@ -73,10 +73,11 @@ public class NationRestController {
     @Operation(summary = "Delete a nation", tags = {"Nation"},
             responses = {
                     @ApiResponse(description = "No content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
             })
-    public ResponseEntity<Optional<Nation>> deleteNation(@PathVariable int id) {
-        Optional<Nation> nationToDelete = nationService.delete(id);
-        return ResponseEntity.status(204).body(nationToDelete);
+    public ResponseEntity<?> deleteNation(@PathVariable String id) {
+        nationService.delete(id);
+        return ResponseEntity.status(204).build();
     }
 }

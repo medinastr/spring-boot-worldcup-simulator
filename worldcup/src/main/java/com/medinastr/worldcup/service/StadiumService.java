@@ -1,6 +1,7 @@
 package com.medinastr.worldcup.service;
 
 import com.medinastr.worldcup.dao.StadiumRepository;
+import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.entity.Stadium;
 import com.medinastr.worldcup.exception.WorldcupConflictException;
 import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
@@ -67,6 +68,19 @@ public class StadiumService {
             throw new WorldcupInvalidAttributeException("Stadium city invalid: " + stadium.getCity());
         } else if(stadium.getGameRental() < 0) {
             throw new WorldcupInvalidAttributeException("Game rental must be more that 0.");
+        }
+    }
+
+    public void delete(String id) {
+        try {
+            int idAux = Integer.parseInt(id);
+            Optional<Stadium> dbStadium = stadiumRepository.findById(idAux);
+            if(dbStadium.isEmpty()) {
+                throw new WorldcupNotFoundException("Stadium not exists.");
+            }
+            stadiumRepository.deleteById(idAux);
+        } catch (NumberFormatException exc) {
+            throw new WorldcupInvalidAttributeException("Id need to be a Integer.");
         }
     }
 }

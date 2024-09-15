@@ -25,7 +25,7 @@ public class Nation implements Serializable {
     @Column(name="institution")
     private String institution;
 
-    @OneToMany(mappedBy = "nation",
+    @OneToMany(mappedBy = "nation", fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Player> players;

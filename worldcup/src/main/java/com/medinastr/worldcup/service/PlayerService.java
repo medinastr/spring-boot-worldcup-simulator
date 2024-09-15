@@ -7,6 +7,8 @@ import com.medinastr.worldcup.entity.Nation;
 import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.exception.WorldcupConflictException;
 import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
+import com.medinastr.worldcup.exception.WorldcupNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +31,18 @@ public class PlayerService {
     public List<PlayerDTO> getPlayers() {
         List<Player> dbPlayers = playerRepository.findAll();
         List<PlayerDTO> players = dbPlayers.stream()
-                .map(Player::toDTO)
+                .map(player -> {
+                    PlayerDTO playerDTO = player.toDTO();
+                    if(player.getNation() != null) {
+                        playerDTO.setNationName(player.getNation().getName());
+                    }
+                    return playerDTO;
+                })
                 .collect(Collectors.toList());
         return players;
     }
 
+    @Transactional
     public Player savePlayer(PlayerDTO playerDTO) {
         Optional<Nation> nation = nationRepository.findByName(playerDTO.getNationName());
         validatePlayer(playerDTO.getFirstName(), playerDTO.getLastName(),
@@ -43,6 +52,7 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
+    @Transactional
     public List<Player> savePlayersList(List<PlayerDTO> playersDTO) {
         List<Player> dbPlayers = playersDTO.stream()
                 .map(playerDTO -> {
@@ -72,4 +82,19 @@ public class PlayerService {
         }
     }
 
+    public void delete(String id) {
+        try {
+            int idAux = Integer.parseInt(id);
+            Optional<Player> dbPlayer = playerRepository.findById(idAux);
+            if(dbPlayer.isEmpty()) {
+                throw new WorldcupNotFoundException("Player not exists.");
+            }
+            Player player = dbPlayer.get();
+            player.setNation(null);
+            playerRepository.save(player);
+            playerRepository.deleteById(idAux);
+        } catch (NumberFormatException exc) {
+            throw new WorldcupInvalidAttributeException("Id need to be a Integer.");
+        }
+    }
 }

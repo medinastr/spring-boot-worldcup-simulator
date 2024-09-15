@@ -6,14 +6,12 @@ public class NationDTO {
 
     private String name;
     private String institution;
-    private String email;
 
     public NationDTO() {}
 
-    public NationDTO(String name, String institution, String email) {
+    public NationDTO(String name, String institution) {
         this.name = name;
         this.institution = institution;
-        this.email = email;
     }
 
     public String getName() {
@@ -30,14 +28,6 @@ public class NationDTO {
 
     public void setInstitution(String institution) {
         this.institution = institution;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Nation toNation() {

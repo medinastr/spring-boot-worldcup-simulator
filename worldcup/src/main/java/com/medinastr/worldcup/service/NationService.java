@@ -1,8 +1,10 @@
 package com.medinastr.worldcup.service;
 
 import com.medinastr.worldcup.dao.NationRepository;
+import com.medinastr.worldcup.dao.PlayerRepository;
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
+import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.exception.WorldcupConflictException;
 import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import com.medinastr.worldcup.exception.WorldcupNotFoundException;
@@ -18,10 +20,12 @@ import java.util.stream.Collectors;
 public class NationService {
 
     private final NationRepository nationRepository;
+    private final PlayerRepository playerRepository;
 
     @Autowired
-    public NationService(NationRepository nationRepository) {
+    public NationService(NationRepository nationRepository, PlayerRepository playerRepository) {
         this.nationRepository = nationRepository;
+        this.playerRepository = playerRepository;
     }
 
     public List<NationDTO> getNations() {
@@ -61,12 +65,20 @@ public class NationService {
         }
     }
 
-    public Optional<Nation> delete(int id) {
-        Optional<Nation> dbNation = nationRepository.findById(id);
-        if(dbNation.isEmpty()) {
-            throw new WorldcupNotFoundException("Nation not exists.");
+    public void delete(String id) {
+        try {
+            int idAux = Integer.parseInt(id);
+            Optional<Nation> dbNation = nationRepository.findById(idAux);
+            if(dbNation.isEmpty()) {
+                throw new WorldcupNotFoundException("Nation not exists.");
+            }
+            dbNation.get().getPlayers().forEach(player -> {
+                player.setNation(null);
+                playerRepository.save(player);
+            });
+            nationRepository.deleteById(idAux);
+        } catch (NumberFormatException exc) {
+            throw new WorldcupInvalidAttributeException("Id need to be a Integer.");
         }
-        nationRepository.deleteById(id);
-        return dbNation;
     }
 }

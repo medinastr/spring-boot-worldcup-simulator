@@ -11,7 +11,7 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-      show-sql: false
+      show-sql: true
 
 spring-doc:
   swagger-ui:

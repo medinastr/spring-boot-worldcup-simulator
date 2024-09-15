@@ -63,4 +63,16 @@ public class PlayerRestController {
         List<Player> dbPlayers = playerService.savePlayersList(playersDTO);
         return ResponseEntity.status(201).body(dbPlayers);
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a player", tags = {"Player"},
+            responses = {
+                    @ApiResponse(description = "No content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
+            })
+    public ResponseEntity<?> deletePlayer(@PathVariable String id) {
+        playerService.delete(id);
+        return ResponseEntity.status(204).build();
+    }
 }
