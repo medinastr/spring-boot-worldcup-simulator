@@ -7,6 +7,7 @@ spring:
     username: springstudent
     password: Springstudent3692@#
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     properties:

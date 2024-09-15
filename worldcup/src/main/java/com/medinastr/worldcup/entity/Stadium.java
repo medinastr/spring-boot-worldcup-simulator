@@ -1,5 +1,6 @@
 package com.medinastr.worldcup.entity;
 
+import com.medinastr.worldcup.dto.StadiumDTO;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -74,7 +75,7 @@ public class Stadium implements Serializable {
         return gameRental;
     }
 
-    public void setGameRental(int gameRental) {
+    public void setGameRental(double gameRental) {
         this.gameRental = gameRental;
     }
 
@@ -87,5 +88,14 @@ public class Stadium implements Serializable {
                 ", city='" + city + '\'' +
                 ", gameRental=" + gameRental +
                 '}';
+    }
+
+    public StadiumDTO toDTO() {
+        StadiumDTO stadiumDTO = new StadiumDTO();
+        stadiumDTO.setName(this.getName());
+        stadiumDTO.setCapacity(this.getCapacity());
+        stadiumDTO.setCity(this.getCity());
+        stadiumDTO.setGameRental(this.getGameRental());
+        return stadiumDTO;
     }
 }

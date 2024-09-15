@@ -6,6 +6,7 @@ import com.medinastr.worldcup.entity.Nation;
 import com.medinastr.worldcup.exception.WorldcupConflictException;
 import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import com.medinastr.worldcup.exception.WorldcupNotFoundException;
+import com.medinastr.worldcup.mapper.MedinaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,8 @@ public class NationService {
 
     public Nation saveNation(NationDTO nationDTO) {
         validateNation(nationDTO);
-        return nationRepository.save(nationDTO.toNation());
+        Nation nation = MedinaMapper.parseObject(nationDTO, Nation.class);
+        return nationRepository.save(nation);
     }
 
     public List<Nation> saveNationsList(List<NationDTO> nationsDTO) {
