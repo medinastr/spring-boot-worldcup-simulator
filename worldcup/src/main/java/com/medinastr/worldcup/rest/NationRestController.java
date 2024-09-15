@@ -33,14 +33,10 @@ public class NationRestController {
     @Operation(summary = "Finds all nations",
             tags = {"Nation"},
             responses = {
-                @ApiResponse(description = "Success", responseCode = "200", content = {
-                        @Content(
-                                mediaType = "application/json",
-                                array = @ArraySchema(schema = @Schema(implementation = NationDTO.class))
-                        )}
-                )
-            }
-    )
+                @ApiResponse(description = "Success", responseCode = "200",
+                        content = {@Content(mediaType = "application/json",
+                                array = @ArraySchema(schema = @Schema(implementation = NationDTO.class)))})
+            })
     public ResponseEntity<List<NationDTO>> nationsList() {
         List<NationDTO> nations = nationService.getNations();
         return ResponseEntity.status(200).body(nations);
