@@ -1,8 +1,15 @@
 package com.medinastr.worldcup.dto;
 
 import com.medinastr.worldcup.entity.Nation;
+import org.springframework.hateoas.RepresentationModel;
 
-public class NationDTO {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class NationDTO extends RepresentationModel<NationDTO> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String name;
     private String institution;

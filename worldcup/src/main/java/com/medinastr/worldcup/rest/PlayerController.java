@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class PlayerApi implements com.medinastr.worldcup.api.PlayerApi {
+public class PlayerController implements com.medinastr.worldcup.api.PlayerApi {
 
     private final PlayerService playerService;
 
     @Autowired
-    public PlayerApi(PlayerService playerService) {
+    public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
 

@@ -1,5 +1,6 @@
 package com.medinastr.worldcup.rest;
 
+import com.medinastr.worldcup.api.NationApi;
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
 import com.medinastr.worldcup.service.NationService;
@@ -10,25 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class NationApi implements com.medinastr.worldcup.api.NationApi {
+public class NationController implements NationApi {
 
     private final NationService nationService;
 
     @Autowired
-    public NationApi(NationService nationService) {
+    public NationController(NationService nationService) {
         this.nationService = nationService;
     }
 
     @Override
     public ResponseEntity<List<NationDTO>> nationsList() {
-        List<NationDTO> nations = nationService.getNations();
+        List<NationDTO> nations = nationService.getNationsList();
         return ResponseEntity.status(200).body(nations);
     }
 
     @Override
-    public ResponseEntity<Nation> saveNation(@RequestBody NationDTO nationDTO) {
-        Nation dbNation = nationService.saveNation(nationDTO);
-        return ResponseEntity.status(201).body(dbNation);
+    public ResponseEntity<NationDTO> getNation(String id) {
+        NationDTO nationDTO = nationService.getNation(id);
+        return ResponseEntity.status(200).body(nationDTO);
+    }
+
+    @Override
+    public ResponseEntity<NationDTO> saveNation(@RequestBody NationDTO nationDTO) {
+        NationDTO dbNation = nationService.saveNation(nationDTO);
+        return ResponseEntity.status(201).body(nationDTO);
     }
 
     @Override

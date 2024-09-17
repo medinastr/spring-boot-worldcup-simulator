@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class StadiumApi implements com.medinastr.worldcup.api.StadiumApi {
+public class StadiumController implements com.medinastr.worldcup.api.StadiumApi {
 
     private final StadiumService stadiumService;
 
     @Autowired
-    public StadiumApi(StadiumService stadiumService) {
+    public StadiumController(StadiumService stadiumService) {
         this.stadiumService = stadiumService;
     }
 

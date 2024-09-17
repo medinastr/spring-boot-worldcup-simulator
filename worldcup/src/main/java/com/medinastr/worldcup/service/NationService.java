@@ -4,12 +4,14 @@ import com.medinastr.worldcup.dao.NationRepository;
 import com.medinastr.worldcup.dao.PlayerRepository;
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
-import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.exception.WorldcupConflictException;
 import com.medinastr.worldcup.exception.WorldcupInvalidAttributeException;
 import com.medinastr.worldcup.exception.WorldcupNotFoundException;
 import com.medinastr.worldcup.mapper.MedinaMapper;
+import com.medinastr.worldcup.rest.NationController;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,17 +30,39 @@ public class NationService {
         this.playerRepository = playerRepository;
     }
 
-    public List<NationDTO> getNations() {
+    public List<NationDTO> getNationsList() {
         List<Nation> nations = nationRepository.findAll();
         return nations.stream()
-                .map(Nation::toDTO)
+                .map(nation -> {
+                    NationDTO nationDTO = nation.toDTO();
+                    String id = Integer.toString(nation.getId());
+                    nationDTO.add(linkTo(methodOn(NationController.class).getNation(id)).withSelfRel());
+                    return nationDTO;
+                })
                 .collect(Collectors.toList());
     }
 
-    public Nation saveNation(NationDTO nationDTO) {
+    public NationDTO getNation(String id) {
+        try {
+            int idAux = Integer.parseInt(id);
+            Optional<Nation> dbNation = nationRepository.findById(idAux);
+            if(dbNation.isEmpty()) {
+                throw new WorldcupNotFoundException("Nation not found.");
+            }
+            NationDTO nationDTO = dbNation.get().toDTO();
+            nationDTO.add(linkTo(methodOn(NationController.class).getNation(id)).withSelfRel()); // um endereço para ele mesmo
+            return nationDTO;
+        } catch (NumberFormatException exc) {
+            throw new WorldcupInvalidAttributeException("Id need to be a Integer.");
+        }
+    }
+
+    public NationDTO saveNation(NationDTO nationDTO) {
         validateNation(nationDTO);
-        Nation nation = MedinaMapper.parseObject(nationDTO, Nation.class);
-        return nationRepository.save(nation);
+        Nation nation = nationRepository.save(nationDTO.toNation());
+        String id = Integer.toString(nation.getId());
+        nationDTO.add(linkTo(methodOn(NationController.class).getNation(id)).withSelfRel());
+        return nationDTO;
     }
 
     public List<Nation> saveNationsList(List<NationDTO> nationsDTO) {

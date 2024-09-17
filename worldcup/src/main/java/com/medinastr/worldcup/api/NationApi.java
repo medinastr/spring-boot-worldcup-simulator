@@ -2,6 +2,8 @@ package com.medinastr.worldcup.api;
 
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
+import com.medinastr.worldcup.entity.Player;
+import com.medinastr.worldcup.entity.Stadium;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,6 +30,16 @@ public interface NationApi {
             })
     public ResponseEntity<List<NationDTO>> nationsList();
 
+    @GetMapping(value = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Find a nation", tags = {"Nation"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Nation.class))),
+                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
+            })
+    public ResponseEntity<NationDTO> getNation(@PathVariable String id);
+
     @PostMapping(value = "/save",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
@@ -37,7 +49,7 @@ public interface NationApi {
                     @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
             })
-    public ResponseEntity<Nation> saveNation(@RequestBody NationDTO nationDTO);
+    public ResponseEntity<NationDTO> saveNation(@RequestBody NationDTO nationDTO);
 
     @PostMapping(value = "/saveAll",
             produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
