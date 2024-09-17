@@ -1,4 +1,4 @@
-package com.medinastr.worldcup.rest;
+package com.medinastr.worldcup.api;
 
 import com.medinastr.worldcup.entity.Nation;
 import com.medinastr.worldcup.entity.Player;
@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,9 @@ import java.util.List;
 
 @RequestMapping("/api/v1/stadiums")
 @Tag(name="Stadium", description = "Endpoints for mapping soccer stadiums")
-public interface StadiumController {
+public interface StadiumApi {
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find all stadiums", tags = {"Stadium"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -27,7 +28,8 @@ public interface StadiumController {
             })
     public ResponseEntity<List<Stadium>> getStadiumsList();
 
-    @GetMapping("/find")
+    @GetMapping(value = "/find",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find a stadium", tags = {"Stadium"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Player.class))),
@@ -37,7 +39,9 @@ public interface StadiumController {
             })
     public ResponseEntity<Stadium> getStadium(@RequestParam String name);
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Save a single stadium", tags = {"Stadium"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
@@ -47,7 +51,9 @@ public interface StadiumController {
             })
     public ResponseEntity<Stadium> saveStadium(@RequestBody Stadium stadium);
 
-    @PostMapping("/saveAll")
+    @PostMapping(value = "/saveAll",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Save new stadiums", tags = {"Stadium"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),

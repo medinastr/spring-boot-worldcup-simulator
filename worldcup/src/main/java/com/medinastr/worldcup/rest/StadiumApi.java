@@ -1,15 +1,7 @@
-package com.medinastr.worldcup.rest.implementation;
+package com.medinastr.worldcup.rest;
 
-import com.medinastr.worldcup.entity.Nation;
-import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.entity.Stadium;
-import com.medinastr.worldcup.rest.StadiumController;
 import com.medinastr.worldcup.service.StadiumService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class StadiumControllerImpl implements StadiumController {
+public class StadiumApi implements com.medinastr.worldcup.api.StadiumApi {
 
     private final StadiumService stadiumService;
 
     @Autowired
-    public StadiumControllerImpl(StadiumService stadiumService) {
+    public StadiumApi(StadiumService stadiumService) {
         this.stadiumService = stadiumService;
     }
 

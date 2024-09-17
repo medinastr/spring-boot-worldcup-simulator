@@ -1,4 +1,4 @@
-package com.medinastr.worldcup.rest;
+package com.medinastr.worldcup.api;
 
 import com.medinastr.worldcup.dto.PlayerDTO;
 import com.medinastr.worldcup.entity.Nation;
@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,9 @@ import java.util.List;
 
 @RequestMapping("/api/v1/players")
 @Tag(name="Player", description = "Endpoints for mapping soccer players")
-public interface PlayerController {
+public interface PlayerApi {
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find all players", tags = {"Player"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -27,7 +28,9 @@ public interface PlayerController {
             })
     public ResponseEntity<List<PlayerDTO>> getPlayers();
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Save a single player", tags = {"Player"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
@@ -37,7 +40,9 @@ public interface PlayerController {
             })
     public ResponseEntity<Player> savePlayer(@RequestBody PlayerDTO playerDTO);
 
-    @PostMapping("/saveAll")
+    @PostMapping(value = "/saveAll",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Save new players", tags = {"Player"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),

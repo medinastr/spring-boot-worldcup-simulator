@@ -1,8 +1,7 @@
-package com.medinastr.worldcup.rest.implementation;
+package com.medinastr.worldcup.rest;
 
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
-import com.medinastr.worldcup.rest.NationController;
 import com.medinastr.worldcup.service.NationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class NationControllerImpl implements NationController {
+public class NationApi implements com.medinastr.worldcup.api.NationApi {
 
     private final NationService nationService;
 
     @Autowired
-    public NationControllerImpl(NationService nationService) {
+    public NationApi(NationService nationService) {
         this.nationService = nationService;
     }
 

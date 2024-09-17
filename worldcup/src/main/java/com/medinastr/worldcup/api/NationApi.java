@@ -1,4 +1,4 @@
-package com.medinastr.worldcup.rest;
+package com.medinastr.worldcup.api;
 
 import com.medinastr.worldcup.dto.NationDTO;
 import com.medinastr.worldcup.entity.Nation;
@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,9 @@ import java.util.List;
 
 @RequestMapping("/api/v1/nations")
 @Tag(name="Nation", description = "Endpoints for mapping soccer nations")
-public interface NationController {
+public interface NationApi {
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Finds all nations",
             tags = {"Nation"},
             responses = {
@@ -27,7 +28,9 @@ public interface NationController {
             })
     public ResponseEntity<List<NationDTO>> nationsList();
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Create new nation", tags = {"Nation"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
@@ -36,7 +39,9 @@ public interface NationController {
             })
     public ResponseEntity<Nation> saveNation(@RequestBody NationDTO nationDTO);
 
-    @PostMapping("/saveAll")
+    @PostMapping(value = "/saveAll",
+            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Create new nation", tags = {"Nation"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(
