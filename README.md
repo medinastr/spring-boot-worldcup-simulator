@@ -1,16 +1,18 @@
-### World cup nations
+### World Cup nations
 
-World cup nations are just to practice what I learn at begin of study spring boot
+World Cup repository is a personal project to practice my REST API skills.
 
-Here, the user can write the names of 4 nations:
+The World cup currently contains Nation, Player and Stadium, but I will create and develop more entities to simulate a real soccer championship like Game, GamePayment, Goal, Referee, etc.
 
-![front](https://github.com/user-attachments/assets/ad88b9cd-329f-4fec-a95d-10d9610116fe)
-
-They will be saved in a database with 5 attributes:
-1. id
-2. nation_name -> the nation name that user writed
-3. wins
-4. goals
-5. goals_conceded
-
-The attributes wins, goals, and goals_conceded will be automatically saved with a value of 0, assuming that the tournament has not started yet.
+# What I practice in this API:
+- Request and responses using ResponseEntity
+- Status codes and verbs
+- Parameters
+- API documentation using Swagger
+- Database migrations using Flyway
+- Tables relationships (one to one, one to many, many to many, etc)
+- Exceptions using HandleException / ControllerAdvice
+- Value Object / DTO mapping using Dozer
+- HATEOAS implementation
+- Content Negotiation (JSON and XML)
+- Repository / Service / RestController pattern
