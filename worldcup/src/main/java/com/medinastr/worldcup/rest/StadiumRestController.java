@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/stadiums")
+@RequestMapping("/v1/stadiums")
 public class StadiumRestController {
 
     private final StadiumService stadiumService;
@@ -78,7 +78,7 @@ public class StadiumRestController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a nation", tags = {"Nation"},
+    @Operation(summary = "Delete a nation", tags = {"Stadium"},
             responses = {
                     @ApiResponse(description = "No content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),

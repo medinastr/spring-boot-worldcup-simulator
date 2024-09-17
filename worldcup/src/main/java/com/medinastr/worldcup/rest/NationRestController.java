@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/nations")
+@RequestMapping("/v1/nations")
 @Tag(name="Nation", description = "Endpoints for mapping soccer nations")
 public class NationRestController {
 
