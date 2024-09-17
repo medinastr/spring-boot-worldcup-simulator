@@ -1,10 +1,10 @@
-### World Cup nations
+# World Cup nations
 
 World Cup repository is a personal project to practice my REST API skills.
 
 The World cup currently contains Nation, Player and Stadium, but I will create and develop more entities to simulate a real soccer championship like Game, GamePayment, Goal, Referee, etc.
 
-# What I practice in this API:
+### What I practice in this API:
 - Request and responses using ResponseEntity
 - Status codes and verbs
 - Parameters
