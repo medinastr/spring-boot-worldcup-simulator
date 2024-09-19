@@ -21,31 +21,31 @@ public class NationController implements NationApi {
     }
 
     @Override
-    public ResponseEntity<List<NationDTO>> nationsList() {
+    public ResponseEntity<List<NationDTO>> getList() {
         List<NationDTO> nations = nationService.getNationsList();
         return ResponseEntity.status(200).body(nations);
     }
 
     @Override
-    public ResponseEntity<NationDTO> getNation(String id) {
+    public ResponseEntity<NationDTO> getById(String id) {
         NationDTO nationDTO = nationService.getNation(id);
         return ResponseEntity.status(200).body(nationDTO);
     }
 
     @Override
-    public ResponseEntity<NationDTO> saveNation(@RequestBody NationDTO nationDTO) {
+    public ResponseEntity<NationDTO> save(@RequestBody NationDTO nationDTO) {
         NationDTO dbNation = nationService.saveNation(nationDTO);
         return ResponseEntity.status(201).body(nationDTO);
     }
 
     @Override
-    public ResponseEntity<List<Nation>> saveNationsList(@RequestBody List<NationDTO> nationsDTO) {
+    public ResponseEntity<List<Nation>> saveAll(@RequestBody List<NationDTO> nationsDTO) {
         List<Nation> dbNations = nationService.saveNationsList(nationsDTO);
         return ResponseEntity.status(201).body(dbNations);
     }
 
     @Override
-    public ResponseEntity<?> deleteNation(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable String id) {
         nationService.delete(id);
         return ResponseEntity.status(204).build();
     }

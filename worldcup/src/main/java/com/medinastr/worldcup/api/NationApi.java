@@ -18,59 +18,25 @@ import java.util.List;
 
 @RequestMapping("/api/v1/nations")
 @Tag(name="Nation", description = "Endpoints for mapping soccer nations")
-public interface NationApi {
+public interface NationApi extends GenericApi<Nation, NationDTO> {
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Finds all nations",
-            tags = {"Nation"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = {@Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = NationDTO.class)))})
-            })
-    public ResponseEntity<List<NationDTO>> nationsList();
+    @Override
+    @Operation(summary = "Get a list of all nations", tags = {"Nation"})
+    public ResponseEntity<List<NationDTO>> getList();
 
-    @GetMapping(value = "/{id}",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Find a nation", tags = {"Nation"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Nation.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
-            })
-    public ResponseEntity<NationDTO> getNation(@PathVariable String id);
+    @Override
+    @Operation(summary = "Get a nation", tags = {"Nation"})
+    public ResponseEntity<NationDTO> getById(String id);
 
-    @PostMapping(value = "/save",
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Create new nation", tags = {"Nation"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<NationDTO> saveNation(@RequestBody NationDTO nationDTO);
+    @Override
+    @Operation(summary = "Save one nation", tags = {"Nation"})
+    public ResponseEntity<NationDTO> save(NationDTO nationDTO);
 
-    @PostMapping(value = "/saveAll",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Create new nation", tags = {"Nation"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(
-                            mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = NationDTO.class)))
-                    ),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<List<Nation>> saveNationsList(@RequestBody List<NationDTO> nationsDTO);
+    @Override
+    @Operation(summary = "Save a list nations", tags = {"Nation"})
+    public ResponseEntity<List<Nation>> saveAll(List<NationDTO> nationDTOS);
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a nation", tags = {"Nation"},
-            responses = {
-                    @ApiResponse(description = "No content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
-            })
-    public ResponseEntity<?> deleteNation(@PathVariable String id);
+    @Override
+    @Operation(summary = "Delete a nation", tags = {"Nation"})
+    public ResponseEntity<?> delete(String id);
 }

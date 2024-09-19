@@ -36,7 +36,7 @@ public class NationService {
                 .map(nation -> {
                     NationDTO nationDTO = nation.toDTO();
                     String id = Integer.toString(nation.getId());
-                    nationDTO.add(linkTo(methodOn(NationController.class).getNation(id)).withSelfRel());
+                    nationDTO.add(linkTo(methodOn(NationController.class).getById(id)).withSelfRel());
                     return nationDTO;
                 })
                 .collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class NationService {
                 throw new WorldcupNotFoundException("Nation not found.");
             }
             NationDTO nationDTO = dbNation.get().toDTO();
-            nationDTO.add(linkTo(methodOn(NationController.class).getNation(id)).withSelfRel()); // um endereço para ele mesmo
+            nationDTO.add(linkTo(methodOn(NationController.class).getById(id)).withSelfRel()); // um endereço para ele mesmo
             return nationDTO;
         } catch (NumberFormatException exc) {
             throw new WorldcupInvalidAttributeException("Id need to be a Integer.");
@@ -61,7 +61,7 @@ public class NationService {
         validateNation(nationDTO);
         Nation nation = nationRepository.save(nationDTO.toNation());
         String id = Integer.toString(nation.getId());
-        nationDTO.add(linkTo(methodOn(NationController.class).getNation(id)).withSelfRel());
+        nationDTO.add(linkTo(methodOn(NationController.class).getById(id)).withSelfRel());
         return nationDTO;
     }
 
