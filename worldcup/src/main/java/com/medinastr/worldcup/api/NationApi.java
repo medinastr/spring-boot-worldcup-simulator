@@ -25,10 +25,6 @@ public interface NationApi extends GenericApi<Nation, NationDTO> {
     public ResponseEntity<List<NationDTO>> getList();
 
     @Override
-    @Operation(summary = "Get a nation", tags = {"Nation"})
-    public ResponseEntity<NationDTO> getById(String id);
-
-    @Override
     @Operation(summary = "Save one nation", tags = {"Nation"})
     public ResponseEntity<NationDTO> save(NationDTO nationDTO);
 
@@ -39,4 +35,14 @@ public interface NationApi extends GenericApi<Nation, NationDTO> {
     @Override
     @Operation(summary = "Delete a nation", tags = {"Nation"})
     public ResponseEntity<?> delete(String id);
+
+    @GetMapping(value = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Get one nation by id", tags = {"Nation"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Object.class))),
+                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
+            })
+    public ResponseEntity<NationDTO> getById(@PathVariable String id);
 }

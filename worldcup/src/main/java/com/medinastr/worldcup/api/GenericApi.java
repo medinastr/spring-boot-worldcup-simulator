@@ -22,15 +22,6 @@ public interface GenericApi<T, DTO> {
             })
     public ResponseEntity<List<DTO>> getList();
 
-    @GetMapping(value = "/{id}",
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @Operation(responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Object.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
-            })
-    public ResponseEntity<DTO> getById(@PathVariable String id);
-
     @PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(responses = {

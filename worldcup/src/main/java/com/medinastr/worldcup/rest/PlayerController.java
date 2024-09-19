@@ -1,5 +1,6 @@
 package com.medinastr.worldcup.rest;
 
+import com.medinastr.worldcup.api.PlayerApi;
 import com.medinastr.worldcup.dto.PlayerDTO;
 import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.service.PlayerService;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class PlayerController implements com.medinastr.worldcup.api.PlayerApi {
+public class PlayerController implements PlayerApi {
 
     private final PlayerService playerService;
 
@@ -20,25 +21,25 @@ public class PlayerController implements com.medinastr.worldcup.api.PlayerApi {
     }
 
     @Override
-    public ResponseEntity<List<PlayerDTO>> getPlayers() {
+    public ResponseEntity<List<PlayerDTO>> getList() {
         List<PlayerDTO> players = playerService.getPlayers();
         return ResponseEntity.status(200).body(players);
     }
 
     @Override
-    public ResponseEntity<Player> savePlayer(@RequestBody PlayerDTO playerDTO) {
-        Player dbPlayer = playerService.savePlayer(playerDTO);
+    public ResponseEntity<PlayerDTO> save(@RequestBody PlayerDTO playerDTO) {
+        PlayerDTO dbPlayer = playerService.savePlayer(playerDTO);
         return ResponseEntity.status(201).body(dbPlayer);
     }
 
     @Override
-    public ResponseEntity<List<Player>> savePlayersList(@RequestBody List<PlayerDTO> playersDTO) {
+    public ResponseEntity<List<Player>> saveAll(@RequestBody List<PlayerDTO> playersDTO) {
         List<Player> dbPlayers = playerService.savePlayersList(playersDTO);
         return ResponseEntity.status(201).body(dbPlayers);
     }
 
     @Override
-    public ResponseEntity<?> deletePlayer(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable String id) {
         playerService.delete(id);
         return ResponseEntity.status(204).build();
     }

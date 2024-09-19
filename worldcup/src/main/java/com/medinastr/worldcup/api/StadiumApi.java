@@ -1,10 +1,10 @@
 package com.medinastr.worldcup.api;
 
-import com.medinastr.worldcup.entity.Nation;
+import com.medinastr.worldcup.dto.PlayerDTO;
+import com.medinastr.worldcup.dto.StadiumDTO;
 import com.medinastr.worldcup.entity.Player;
 import com.medinastr.worldcup.entity.Stadium;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,58 +17,31 @@ import java.util.List;
 
 @RequestMapping("/api/v1/stadiums")
 @Tag(name="Stadium", description = "Endpoints for mapping soccer stadiums")
-public interface StadiumApi {
+public interface StadiumApi extends GenericApi<Stadium, Stadium> {
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Find all stadiums", tags = {"Stadium"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = {@Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Player.class)))})
-            })
-    public ResponseEntity<List<Stadium>> getStadiumsList();
+    @Override
+    @Operation(summary = "Get a list of all stadiums", tags = {"Stadium"})
+    public ResponseEntity<List<Stadium>> getList();
 
-    @GetMapping(value = "/find",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Find a stadium", tags = {"Stadium"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Player.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<Stadium> getStadium(@RequestParam String name);
+    @Override
+    @Operation(summary = "Save one stadium", tags = {"Stadium"})
+    public ResponseEntity<Stadium> save(Stadium stadium);
 
-    @PostMapping(value = "/save",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Save a single stadium", tags = {"Stadium"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<Stadium> saveStadium(@RequestBody Stadium stadium);
+    @Override
+    @Operation(summary = "Save a list of all stadiums", tags = {"Stadium"})
+    public ResponseEntity<List<Stadium>> saveAll(List<Stadium> stadiums);
 
-    @PostMapping(value = "/saveAll",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Save new stadiums", tags = {"Stadium"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<List<Stadium>> saveStadiumsList(@RequestBody List<Stadium> stadiums);
+    @Override
+    @Operation(summary = "Delete one stadium by id", tags = {"Stadium"})
+    public ResponseEntity<?> delete(String id);
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a nation", tags = {"Stadium"},
+    @GetMapping(value = "/{name}",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Get one stadium by name", tags = {"Stadium"},
             responses = {
-                    @ApiResponse(description = "No content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
-            })
-    public ResponseEntity<?> deleteStadium(@PathVariable String id);
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = Object.class))),
+            @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
+            @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
+    })
+    public ResponseEntity<Stadium> getByName(@RequestParam String name);
 }

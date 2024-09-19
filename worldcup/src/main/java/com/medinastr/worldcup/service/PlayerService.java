@@ -43,13 +43,14 @@ public class PlayerService {
     }
 
     @Transactional
-    public Player savePlayer(PlayerDTO playerDTO) {
+    public PlayerDTO savePlayer(PlayerDTO playerDTO) {
         Optional<Nation> nation = nationRepository.findByName(playerDTO.getNationName());
         validatePlayer(playerDTO.getFirstName(), playerDTO.getLastName(),
                 playerDTO.getShirtNumber(), nation);
         Player player = playerDTO.toPlayer();
         player.setNation(nation.get());
-        return playerRepository.save(player);
+        playerRepository.save(player);
+        return playerDTO;
     }
 
     @Transactional

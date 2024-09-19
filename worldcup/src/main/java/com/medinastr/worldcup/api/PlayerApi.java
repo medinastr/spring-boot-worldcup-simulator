@@ -17,47 +17,17 @@ import java.util.List;
 
 @RequestMapping("/api/v1/players")
 @Tag(name="Player", description = "Endpoints for mapping soccer players")
-public interface PlayerApi {
+public interface PlayerApi extends GenericApi<Player, PlayerDTO> {
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Find all players", tags = {"Player"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = {@Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Player.class)))})
-            })
-    public ResponseEntity<List<PlayerDTO>> getPlayers();
+    @Override
+    public ResponseEntity<List<PlayerDTO>> getList();
 
-    @PostMapping(value = "/save",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Save a single player", tags = {"Player"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<Player> savePlayer(@RequestBody PlayerDTO playerDTO);
+    @Override
+    public ResponseEntity<PlayerDTO> save(@RequestBody PlayerDTO playerDTO);
 
-    @PostMapping(value = "/saveAll",
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Save new players", tags = {"Player"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = Nation.class))),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content)
-            })
-    public ResponseEntity<List<Player>> savePlayersList(@RequestBody List<PlayerDTO> playersDTO);
+    @Override
+    public ResponseEntity<List<Player>> saveAll(@RequestBody List<PlayerDTO> playersDTO);
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a player", tags = {"Player"},
-            responses = {
-                    @ApiResponse(description = "No content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
-            })
-    public ResponseEntity<?> deletePlayer(@PathVariable String id);
+    @Override
+    public ResponseEntity<?> delete(@PathVariable String id);
 }
